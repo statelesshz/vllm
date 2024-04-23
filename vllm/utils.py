@@ -140,6 +140,15 @@ def is_neuron() -> bool:
 
 
 @lru_cache(maxsize=None)
+def is_xpu() -> bool:
+    try:
+        import torch_npu
+    except ImportError:
+        torch_npu = None
+    return torch_npu is not None
+
+
+@lru_cache(maxsize=None)
 def get_max_shared_memory_bytes(gpu: int = 0) -> int:
     """Returns the maximum shared memory per thread block in bytes."""
     # NOTE: This import statement should be executed lazily since
